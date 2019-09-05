@@ -26,6 +26,7 @@ public class CalcController {
 	
 	
 	@PostMapping("/diff")
+	//@RequestMapping(consumes="application/xml")
 	public int diff(@RequestBody CalcOperation calcOperation) {
 		return calculator.subtract(calcOperation.getNum1(), calcOperation.getNum2());
 	}
