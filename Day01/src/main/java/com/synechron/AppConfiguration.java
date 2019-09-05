@@ -32,10 +32,10 @@ public class AppConfiguration implements WebMvcConfigurer {
 		return Arrays.asList("Virat", "Dhoni", "product", "square");
 	}
 
-	@Override
-	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-		configurer.enable();
-	}
+//	@Override
+//	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+//		configurer.enable();
+//	}
 	
 	
 }
