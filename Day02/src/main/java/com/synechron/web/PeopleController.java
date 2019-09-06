@@ -1,4 +1,4 @@
-package com.synechron;
+package com.synechron.web;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,55 +12,50 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.synechron.domain.Person;
+import com.synechron.service.PeopleService;
+
 @RestController
 @RequestMapping("/person")
 public class PeopleController {
 
 	@Autowired
-	private PersonRepository personRepository;
+	private PeopleService peopleService;
+	
+	@GetMapping("all/greaterthan/{age}")
+	public List<Person> getAllWithAge(@PathVariable int age) {
+		return peopleService.getAllWithAge(age);
+	}
+	
+	@GetMapping("/{name}/{age}")
+	public List<Person> getByNameAndAge(@PathVariable String name, @PathVariable int age) {
+		return peopleService.getByNameAndAge(name, age);
+	}
 	
 	@GetMapping("/{id}")
 	public Person loadPerson(@PathVariable int id) {
-		Optional<Person> opt = personRepository.findById(id);
-		return opt.orElseGet(() -> new Person());
+		return peopleService.loadPerson(id);
 	}
 		
 	@PutMapping("/{id}/{age}")
 	public String updateAge(@PathVariable int id, @PathVariable int age) {
-		Optional<Person> opt = personRepository.findById(id);
-		if(opt.isPresent()) {
-			Person person = opt.get();
-			person.setAge(age);
-			personRepository.save(person);
-			return "Age updated";
-		}
-		return "Person with id " + id + " is not found in DB";
+		return peopleService.updateAge(id, age);
 	}
 	
 	@DeleteMapping("/{id}")
 	public String deletePerson(@PathVariable int id) {
-		Optional<Person> opt = personRepository.findById(id);
-		if(opt.isPresent()) {
-			Person person = opt.get();
-			personRepository.delete(person);
-			return "Person with id " + id + " deleted";
-		}
-		return "Person with id " + id + " is not found in DB";
+		return peopleService.deletePerson(id);
 	}
 	
 	@GetMapping("/all")
 	public Iterable<Person> getAll() {
-		return personRepository.findAll();
+		return peopleService.getAll();
 	}
 	
 	@PostMapping("/{name}/{age}")
 	public String createPerson(@PathVariable String name, 
 			@PathVariable int age) {
-		Person person = new Person();
-		person.setName(name);
-		person.setAge(age);
-		personRepository.save(person);
-		return "Success: Person with id " + person.getId() + " is created";
+		return peopleService.createPerson(name, age);
 	}
 	
 	
