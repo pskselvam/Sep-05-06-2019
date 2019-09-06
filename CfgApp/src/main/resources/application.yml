@@ -1,0 +1,26 @@
+spring:
+  profiles.active: qa
+
+---
+spring:
+  profiles: dev
+server:
+  port: 8080  
+
+message: DEFAULT yml welcome
+
+---
+spring:
+  profiles: qa
+server:
+  port: 8081 
+message: QA yml welcome
+
+---
+spring:
+  profiles: prod
+server:
+  port: 8082  
+message: PROD yml welcome
+
+
