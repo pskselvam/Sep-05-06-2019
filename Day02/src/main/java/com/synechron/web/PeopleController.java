@@ -49,6 +49,7 @@ public class PeopleController {
 	
 	@GetMapping("/all")
 	public Iterable<Person> getAll() {
+		System.out.println("******PeopleService: " + peopleService.getClass().getName());
 		return peopleService.getAll();
 	}
 	
